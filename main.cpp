@@ -1,10 +1,4 @@
-/*
-
-Iteracja 4.
-Dodaj do powyższego panelu opcję
-e) szczęśliwy traf
-Czyli wylosuj dla użytkownika książkę do czytania
-*/
+// dopisz funkje np. wybor uzytkownika, wyświetlanie alfabetycznie czy tez wedlug ocen malejaco
 #include <iostream>
 #include <string>
 #include <vector>
@@ -16,10 +10,11 @@ Czyli wylosuj dla użytkownika książkę do czytania
 
 using namespace std;
 
+bool operator<(const Review& r1, const Review& r2);
 bool WorseThan(const Review& r1, const Review& r2);
 bool FillReview(Review& rr);
 void ShowReview(const Review& rr);
-void userChoice(int choice);
+int userChoice(int choice);
 //bool operator==(Review const & lhs, Review const & rhs);
 //bool operator==(unsigned int other, Review const& r);
 //bool operator==(Review const& r, unsigned int other);
@@ -35,9 +30,7 @@ int main()
 	unsigned int rating = 0;
 
     int choice = 0;
-    //userChoice(choice);
-    cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book ,(6) exit "<< endl;
-    cin >> choice;
+    choice = userChoice(choice);
 
     do
     {
@@ -57,10 +50,7 @@ int main()
 
                 books.push_back(Book);
 
-                //userChoice(choice);
-
-                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                cin >> choice;
+                choice = userChoice(choice);
 
                 break;
             }
@@ -81,8 +71,8 @@ int main()
                       books.erase(books.begin() + index);
                     }
 
-                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                cin >> choice;
+                choice = userChoice(choice);
+
                 break;
             }
 
@@ -92,10 +82,11 @@ int main()
 
                 // przy uzyciu wyrazenia lambda:
 
-                std::sort(books.begin(),
-                          books.end(),
+                sort(books.begin(), books.end(),
                           [](const Review & lhs, const Review & rhs)
                           {return lhs.get_title() < rhs.get_title();});
+
+                //sort(books.begin(), books.end());
 
                 cout << "Books in alphabetical order: ";
 
@@ -104,8 +95,7 @@ int main()
                         ShowReview(books[i]);
                     }
 
-                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book , (6) exit "<< endl;
-                cin >> choice;
+                choice = userChoice(choice);
 
                 break;
             }
@@ -126,8 +116,8 @@ int main()
                             ShowReview(books[i]);
                         }
 
-                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                cin >> choice;
+                choice = userChoice(choice);
+
                 break;
             }
 
@@ -136,8 +126,9 @@ int main()
                 int randomIndex = rand() % books.size();
                 Review random_book = books.at(randomIndex);
                 cout << random_book.get_title() << " " << random_book.get_rating() << endl;
-                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                cin >> choice;
+
+                choice = userChoice(choice);
+
                 break;
             }
 
@@ -145,9 +136,7 @@ int main()
                 {
                     cout << "wrong entry. " <<
                     endl << "Restarting program.";
-                    cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                    cin >> choice;
-                    //userChoice(choice); //Calls/restarts the function
+                    choice = userChoice(choice);
                     break;
                 }
 
@@ -184,11 +173,22 @@ void ShowReview(const Review & rr)
         cout << rr.get_rating() << endl;
 }
 
-void userChoice(int choice)
+int userChoice(int choice)
 {
     cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) pick a randomly chosen book, (6) exit "<< endl;
-                cin >> choice;
+    cin >> choice;
+
+    return choice;
 }
+
+//bool operator<(const Review & r1, const Review & r2)
+//{
+	//In alphabetical order
+	//if (r1.get_title() < r2.get_title())
+	//	return true;
+
+	//return false;
+//}
 
 //bool operator==(Review const & lhs, Review const & rhs)
 //{
