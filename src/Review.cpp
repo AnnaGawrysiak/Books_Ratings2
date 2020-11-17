@@ -26,14 +26,9 @@ Review::~Review()
      return title;
  }
 
- //bool operator<(Review& p1, Review& p2)
-   // {
-    //    return p1.get_title() < p2.get_title(); // order by title
-   // }
 
   unsigned int Review::get_rating() const
   {
       return rating;
   }
 
- //mutator functions

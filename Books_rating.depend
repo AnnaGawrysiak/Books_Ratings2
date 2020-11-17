@@ -1,23 +1,21 @@
 # depslib dependency file v1.0
-1605555712 source:c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\src\review.cpp
+1605612860 source:c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\src\review.cpp
 	<iostream>
 	<string>
 	<cmath>
 	<algorithm>
 	"Review.h"
 
-1605555712 c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\include\review.h
+1605612860 c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\include\review.h
 	<iostream>
 	<string>
 	<vector>
 
-1605559395 source:c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\main.cpp
+1605613107 source:c:\users\ania\onedrive\pulpit\programowanie\programowanie_lekcje\lekcja_22\books_ratings\books_rating\main.cpp
 	<iostream>
 	<string>
 	<vector>
 	<algorithm>
 	<cmath>
-	<ctime>
-	<cstdlib>
 	"Review.h"
 
