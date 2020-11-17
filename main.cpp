@@ -1,36 +1,29 @@
-//Iteracja 1:
-//Program ma za zadanie poprosiæ u¿ytkownika o podanie tytu³ów ksi¹¿ek i ich oceny (za³ó¿my skalê 0-10).
-//Tak zebrane dane ma wyœwietliæ:
-//a) w kolejnoœci podanej przez u¿ytkownika
-//b) w kolejnoœci alfabetycznej
-//c) w kolejnoœci ocen malej¹co
-//d) w kolejnoœci losowej
+// przeladuj operator przypisania
+//Iteracja 2:
+//Dopisz do programu funkcje umożliwiające dodanie i usunięcie książki.
 #include <iostream>
 #include <string>
 #include <vector>
 #include <algorithm>    // std::sort
 #include <cmath>
-#include <ctime>
-#include <cstdlib>
 #include "Review.h"
 
 using namespace std;
+
 bool WorseThan(const Review& r1, const Review& r2);
 bool FillReview(Review& rr);
 void ShowReview(const Review& rr);
-bool compare_by_title(const Review& lhs, const Review& rhs) {
-    return lhs.get_title() < rhs.get_title();
-}
+//bool operator==(Review const & lhs, Review const & rhs);
+//bool operator==(unsigned int other, Review const& r);
+//bool operator==(Review const& r, unsigned int other);
 
 int main()
 {
-    srand( time( NULL ) );
-
     vector<Review> books;
 
 	string title;
 
-	unsigned int rating;
+	unsigned int rating = 0;
 
     int choice;
     cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
@@ -53,47 +46,65 @@ int main()
                 Review Book (title, rating);
 
                 books.push_back(Book);
+
+                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
+                cin >> choice;
+
                 break;
             }
 
         case 2:
             {
-                cout << "Whatever2";
+                string mytitle;
+                cin.ignore();
+                cout<<"Which book would you like to remove? Type in title: ";
+                getline(cin, mytitle);
+                auto it = find_if(books.begin(), books.end(), [&mytitle](const Review& obj) {return obj.get_title() == mytitle;});
+
+                if (it != books.end())
+                    {
+                      // found element. it is an iterator to the first matching element.
+
+                      auto index = std::distance(books.begin(), it);
+                      books.erase(books.begin() + index);
+                    }
+
+                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
+                cin >> choice;
                 break;
             }
 
         case 3:
             {
                 cout << "Whatever2";
+                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
+                cin >> choice;
+
                 break;
             }
 
         case 4:
             {
                 cout << "Whatever2";
+                cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
+                cin >> choice;
                 break;
             }
 
         }
 
-    cout << "Which do you want to do? (1) add a book title, (2)remove a book title,(3) display in alphabetical order, (4) display in ranking order, (5) exit "<< endl;
-    cin >> choice;
-
 
     } while(choice != 5);
 
-//a) w kolejnoœci podanej przez u¿ytkownika
+//a) w kolejnosci podanej przez uzytkownika
 cout << "You entered the following:\n";
-	for(int unsigned i = 0; i < books.size(); i++) //dla wyświetlenia zawartości vectora używaj unsigned int
+	for(int unsigned i = 0; i < books.size(); i++)
     {
-        cout << books[i].get_title();
-        cout << " ";
-        cout << books[i].get_rating() << endl;
+        ShowReview(books[i]);
     }
 
 //b) w kolejnoœci alfabetycznej
 
-//std::sort(books.begin(), books.end(), compare_by_title);//sort the vector
 // przy uzyciu wyrazenia lambda:
 
 std::sort(books.begin(), books.end(),
@@ -103,12 +114,11 @@ std::sort(books.begin(), books.end(),
 });
 
 cout << "Books in alphabetical order: ";
-	for(int unsigned i = 0; i < books.size(); i++) //dla wyświetlenia zawartości vectora używaj unsigned int
+for(int unsigned i = 0; i < books.size(); i++)
     {
-        cout << books[i].get_title();
-        cout << " ";
-        cout << books[i].get_rating() << endl;
+        ShowReview(books[i]);
     }
+
 
 //c) w kolejnoœci ocen malejaco
 
@@ -119,11 +129,9 @@ std::sort(books.begin(), books.end(),
 });
 
 cout << "The highest rated books: ";
-	for(int unsigned i = 0; i < books.size(); i++) //dla wyświetlenia zawartości vectora używaj unsigned int
+for(int unsigned i = 0; i < books.size(); i++)
     {
-        cout << books[i].get_title();
-        cout << " ";
-        cout << books[i].get_rating() << endl;
+        ShowReview(books[i]);
     }
 
 //d) w kolejnoœci losowej
@@ -132,11 +140,27 @@ cout << "Randomly chosen books: " << endl;
 
 random_shuffle(books.begin(), books.end());
 
-for(int unsigned i = 0; i < books.size(); i++) //dla wyświetlenia zawartości vectora używaj unsigned int
+for(int unsigned i = 0; i < books.size(); i++)
     {
-        cout << books[i].get_title();
-        cout << books[i].get_rating() << endl;
+        ShowReview(books[i]);
     }
 
 	return 0;
 }
+
+void ShowReview(const Review & rr)
+{
+        cout << rr.get_title();
+        cout << " ";
+        cout << rr.get_rating() << endl;
+}
+
+
+//bool operator==(Review const & lhs, Review const & rhs)
+//{
+
+   // return lhs.get_title() == rhs.get_title();
+//}
+
+//bool operator==(unsigned int other, Review const& r) { return r.get_serial_number() == other; }
+//bool operator==(Review const& r, unsigned int other) { return r.get_serial_number() == other; }
